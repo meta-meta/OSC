@@ -5,7 +5,6 @@ import com.illposed.osc.OSCMessage;
 import com.illposed.osc.OSCPortIn;
 import com.illposed.osc.OSCPortOut;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,14 +19,14 @@ public class OSC {
             try {
                 oscPortOut = new OSCPortOut();
             } catch (Exception e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
             }
         }
         return oscPortOut;
     }
 
     private static OSCPortIn getOscPortIn() {
-        if(null == oscPortIn) {
+        if (null == oscPortIn) {
             try {
                 oscPortIn = new OSCPortIn(7400);
                 oscPortIn.startListening();
@@ -43,11 +42,7 @@ public class OSC {
     }
 
     public static void sendMsg(String address, Object ... messages) {
-        List<Object> msgList = new ArrayList<>(messages.length);
-        for(Object message : messages) {
-            msgList.add(message);
-        }
-        sendMsg(address, msgList);
+        sendMsg(address, Arrays.asList(messages));
     }
 
     public static void sendMsg(String address, List<Object> messages) {
